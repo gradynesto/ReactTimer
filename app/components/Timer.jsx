@@ -61,15 +61,12 @@ var Timer = React.createClass({
   },
   render: function () {
     var { count, timerStatus } = this.state;
-    var renderControlArea = () => {
-      return <Controls countdownStatus={timerStatus} onStatusChange={this.handleStatusChange} />
-    }
 
     return (
       <div>
         <h1 className="page-title">Timer</h1>
         <Clock totalSeconds={count} />
-        {renderControlArea()}
+        <Controls countdownStatus={timerStatus} onStatusChange={this.handleStatusChange} />
       </div>
     );
   }
