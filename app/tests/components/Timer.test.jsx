@@ -15,61 +15,61 @@ describe('Timer', () => {
 
 
     describe('handleStatusChange', () => {
-        it('should set state to paused by default and timer starts at 0', (done) =>{
-            var timer = TestUtils.renderIntoDocument(<Timer/>);
-            
+
+        it('should start timer on started status', (done) => {
+            var timer = TestUtils.renderIntoDocument(<Timer />);
+
+            timer.handleStatusChange('started');
+            expect(timer.state.count).toBe(0);
+
+            setTimeout(() => {
+                expect(timer.state.timerStatus).toBe('started');
+                expect(timer.state.count).toBe(1);
+                done();
+            }, 1001);
+
+        });
+
+        it('should set state to paused by default and timer starts at 0', (done) => {
+            var timer = TestUtils.renderIntoDocument(<Timer />);
+
             expect(timer.state.count).toBe(0);
             expect(timer.state.timerStatus).toBe('paused');
 
             done();
         });
 
-        it('should pause timer on paused state', (done)=> {
-            var timer = TestUtils.renderIntoDocument(<Timer/>);
+        it('should pause timer on paused status', (done) => {
+            var timer = TestUtils.renderIntoDocument(<Timer />);
+
+            timer.setState({ count: 10 });
             timer.handleStatusChange('started');
+            timer.handleStatusChange('paused');
+
 
             setTimeout(() => {
-                timer.handleStatusChange('paused');
-                expect(timer.state.count).toBe(1);
                 expect(timer.state.timerStatus).toBe('paused');
+                expect(timer.state.count).toBe(10);
                 done();
             }, 1001);
 
         });
 
+        it('should clear count on stopped status', (done) => {
+            var timer = TestUtils.renderIntoDocument(<Timer />);
 
-        it('should reset timer if stopped', (done)=> {
-            var timer = TestUtils.renderIntoDocument(<Timer/>);
+            timer.setState({ count: 10 });
             timer.handleStatusChange('started');
+            timer.handleStatusChange('stopped');
+
 
             setTimeout(() => {
-                timer.handleStatusChange('stopped');
+                expect(timer.state.timerStatus).toBe('stopped');
                 expect(timer.state.count).toBe(0);
-                expect(timer.state.timerStatus).toBe('paused');
                 done();
-            }, 2001);
-
+            }, 1001);
 
         });
-
-/*         it('should resume timer on after pausing', (done)=> {
-            var timer = TestUtils.renderIntoDocument(<Timer/>);
-            timer.handleStatusChange('started');
-
-            setTimeout(() => {
-                timer.handleStatusChange('paused');
-            }, 1001);
-
-            timer.handleStatusChange('started');
-
-            setTimeout(() => {
-                timer.handleStatusChange('paused');
-                expect(timer.state.count).toBe(2);
-                done();
-            }, 1001);
-
-
-        }); */
 
     });
 

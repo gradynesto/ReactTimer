@@ -16,12 +16,13 @@ var Timer = React.createClass({
         case 'started':
           this.startTimer();
           break;
-        case 'paused':
-          break;
         case 'stopped':
+          this.setState({ count: 0 });
+        case 'paused':
           clearInterval(this.timer)
           this.timer = undefined;
           break;
+
       }
     }
   },
@@ -31,33 +32,13 @@ var Timer = React.createClass({
   },
   startTimer: function () {
     this.timer = setInterval(() => {
-      var newCount = this.state.count + 1;
       this.setState({
-        count: newCount
+        count: this.state.count + 1
       });
     }, 1000);
   },
   handleStatusChange: function (newStatus) {
-    switch (newStatus) {
-      case 'started':
-        this.setState({
-          timerStatus: 'started'
-        });
-        break;
-      case 'stopped':
-        clearInterval(this.timer)
-        this.timer = undefined;
-        this.setState({
-          count: 0,
-        });
-      case 'paused':
-        clearInterval(this.timer)
-        this.timer = undefined;
-        this.setState({
-          timerStatus: 'paused'
-        });
-        break;
-    }
+    this.setState({timerStatus: newStatus});
   },
   render: function () {
     var { count, timerStatus } = this.state;
