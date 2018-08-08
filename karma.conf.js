@@ -9,11 +9,20 @@ module.exports = function (config) {
             'node_modules/jquery/dist/jquery.min.js',
             'node_modules/foundation-sites/dist/foundation.min.js',
             'app/tests/**/*.test.jsx'
-    ],
+        ],
         preprocessors: {
-            'app/tests/**/*.test.jsx': ['webpack', 'sourcemap']
+            'app/tests/**/*.test.jsx': ['webpack', 'sourcemap'],
+            'app/**/*.jsx': 'coverage'
         },
-        reporters: ['mocha'],
+        reporters: ['coverage', 'coveralls'],
+        coverageReporter: {
+            dir: 'build/reports/coverage',
+            reporters: [
+                // reporters not supporting the 'file' property
+                { type: 'html', subdir: 'report-html' },
+                { type: 'lcov', subdir: 'report-lcov' }
+            ]
+        },
         client: {
             mocha: {
                 timeout: '5000'
