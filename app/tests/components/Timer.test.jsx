@@ -13,7 +13,7 @@ describe('Timer', () => {
         expect(Timer).toExist();
     });
 
-
+/*
     describe('handleStatusChange', () => {
 
         it('should start timer on started status', (done) => {
@@ -72,5 +72,5 @@ describe('Timer', () => {
         });
 
     });
-
+*/
 });
