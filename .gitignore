@@ -1,3 +1,7 @@
 node_modules/
 # Ignore Visual Studio folder
 .vscode/
+# Ignore .coveralls.yml
+.coveralls.yml
+# Ignore build folder
+build/
